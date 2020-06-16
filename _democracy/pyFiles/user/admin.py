@@ -33,7 +33,7 @@ def import_users_pass(account, user, _pass):
             x for x in users
             if ((x['account'] == account)
                 and (x['user'] == user)
-                and (x['pass']) == _pass)
+                and (x['pass'] == _pass))
         ]
     return users
 
@@ -92,10 +92,15 @@ def insert_user(user):
     with open('data/api_db/User.json', 'w') as f:
         json.dump(users, f)
 
+def get_default_currency(user):
+    return 'usd'
+
 def create_user():
     new_user = create_account()
     if check_valid_new_user(new_user):
-        print('************')
+        new_user.update({
+            'currency': get_default_currency(new_user)
+        })
         insert_user(new_user)
     else:
         msg = 'User is already taken!'
@@ -111,9 +116,13 @@ def user_login():
         'pass': pass_to_key(_pass, _account)
     }
     if check_user_login(user):
-        print('success!')
-    else:
-        print('fail')
-
-    exit()
-
+        return {
+            'login': True,
+            'account': _account,
+            'user': _user
+        }
+    return {
+        'login': False,
+        'account': _account,
+        'user': _user
+    }

@@ -7,10 +7,12 @@
 
 from user.admin import create_user
 from user.admin import user_login
+from investment.admin import create_investment
+from investment.admin import deposit_investment
 
 
-from modules.ssss import ssss_split
-from modules.ssss import ssss_combine
+# from modules.ssss import ssss_split
+# from modules.ssss import ssss_combine
 
 # # With test_credentias you can build shards.
 # file = 'local/credentials'
@@ -26,7 +28,13 @@ from modules.ssss import ssss_combine
 
 
 def main():
-    user_login()
+    # user = user_login()
+    user = {'login': True, 'account': 'josemariasosa', 'user': 'root'}
+    if user.get('login', False):
+        print('Login successful!')
+        # create_investment(user)
+        deposit_investment(user)
+
 
 if __name__ == '__main__':
     main()
